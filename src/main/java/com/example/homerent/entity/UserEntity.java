@@ -2,7 +2,8 @@ package com.example.homerent.entity;
 
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(indexes = @Index(columnList = "email"))
 public class UserEntity extends BaseEntity{
     private String firstName;
     private String middleName;
@@ -18,5 +20,9 @@ public class UserEntity extends BaseEntity{
     private String email;
     private String phoneNumber;
     private String password;
+
+    private boolean isAccountActive;
+
+    private int numberOfWrongPasswordAttempt;
 
 }

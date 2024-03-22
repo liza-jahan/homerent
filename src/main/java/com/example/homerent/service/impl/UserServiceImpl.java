@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -18,6 +19,10 @@ public class UserServiceImpl implements UserService {
     public UUID saveUser(UserRegistrationRequest request) {
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(request, userEntity);
+        final Date date = new Date();
+        userEntity.setCreatedTime(date);
+        userEntity.setLastUpdateTime(date);
+        userEntity.setAccountActive(true);
         userEntity = userRepository.save(userEntity);
         return userEntity.getId();
     }
