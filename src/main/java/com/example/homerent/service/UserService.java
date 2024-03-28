@@ -1,6 +1,6 @@
 package com.example.homerent.service;
 
-import com.example.homerent.model.UserRegistrationRequest;
+import com.example.homerent.model.request.UserRegistrationRequest;
 
 import java.util.UUID;
 
