@@ -4,6 +4,7 @@ import com.example.homerent.entity.Role;
 import com.example.homerent.entity.UserEntity;
 import com.example.homerent.enums.UserType;
 import com.example.homerent.exception.IdentifierExistException;
+import com.example.homerent.exception.NotFoundException;
 import com.example.homerent.model.request.UserRegistrationRequest;
 import com.example.homerent.repository.UserRepository;
 import com.example.homerent.service.RoleService;
@@ -44,6 +45,15 @@ public class UserServiceImpl implements UserService {
                 .build();
         userEntity = userRepository.save(userEntity);
         return userEntity.getId();
+    }
+
+    @Override
+    public UUID createForgetPasswordLink(String email) {
+        if(userRepository.findUserByEmail(email).isEmpty())
+        {
+            throw new NotFoundException("Email not found", "01-U01-002");
+        }
+        return null;
     }
 
     private boolean isUserExist(UserRegistrationRequest request) {
