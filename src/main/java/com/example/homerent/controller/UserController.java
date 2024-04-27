@@ -53,7 +53,6 @@ public class UserController {
                 .results(new ForgotPasswordResponse(email).toString())
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        //        return ResponseEntity.ok("Password reset request has been send to the email"+forgotPasswordAPI.getUsername());
 
     }
 
