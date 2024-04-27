@@ -6,5 +6,7 @@ import java.util.UUID;
 
 public interface UserService {
     UUID saveUser(UserRegistrationRequest request);
-    UUID createForgetPasswordLink(String email);
+    String createForgetPasswordLink(String email);
+
+
 }

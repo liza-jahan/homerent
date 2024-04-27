@@ -42,4 +42,13 @@ public class GlobalExceptionHandler {
         return serviceResponse;
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public APIResponse<?> handleNotFoundException(NotFoundException exception) {
+        APIResponse<?> serviceResponse = new APIResponse<>();
+        serviceResponse.setStatus(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(null, exception.getMessage(), exception.getErrorCode())));
+        return serviceResponse;
+    }
+
+
 }

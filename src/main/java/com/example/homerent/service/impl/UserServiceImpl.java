@@ -2,6 +2,7 @@ package com.example.homerent.service.impl;
 
 import com.example.homerent.entity.Role;
 import com.example.homerent.entity.UserEntity;
+import com.example.homerent.enums.Month;
 import com.example.homerent.enums.UserType;
 import com.example.homerent.exception.IdentifierExistException;
 import com.example.homerent.exception.NotFoundException;
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UUID createForgetPasswordLink(String email) {
+    public String createForgetPasswordLink(String email) {
         if(userRepository.findUserByEmail(email).isEmpty())
         {
             throw new NotFoundException("Email not found", "01-U01-002");
@@ -56,7 +57,12 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     private boolean isUserExist(UserRegistrationRequest request) {
         return userRepository.findUserByEmail(request.getEmail()).isPresent();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Month.JANUARY.getShortName().toLowerCase());
     }
 }
