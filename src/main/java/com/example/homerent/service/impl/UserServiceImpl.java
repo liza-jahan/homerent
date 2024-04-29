@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String createForgetPasswordLink(String email) {
+    public UUID createForgetPasswordLink(String email) {
         if(userRepository.findUserByEmail(email).isEmpty())
         {
             throw new NotFoundException("Email not found", "01-U01-002");

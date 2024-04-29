@@ -43,14 +43,13 @@ public class UserController {
     }
     @PostMapping("forgotPassword")
     public ResponseEntity<APIResponse<String>> forgotPassword(@RequestBody ForgotPasswordResponse forgotPasswordResponse){
-
-            String email=userService.createForgetPasswordLink(forgotPasswordResponse.toString());
+        String email = forgotPasswordResponse.getEmail();
         APIResponse<String> responseDTO = APIResponse
                 .<String>builder()
                 .dateTime(new Date().toString())
                 .status(HttpStatus.OK.getReasonPhrase())
                 .code(HttpStatus.OK)
-                .results(new ForgotPasswordResponse(email).toString())
+                .results(email)
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 
