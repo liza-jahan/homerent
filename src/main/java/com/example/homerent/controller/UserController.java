@@ -40,8 +40,22 @@ public class UserController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @PostMapping("forgotPassword")
-    public ResponseEntity<APIResponse<String>> initiatePasswordResetLink(){
+//    @PostMapping("forgotPassword")
+//    public ResponseEntity<APIResponse<String>> initiatePasswordResetLink(){
+//
+//        APIResponse<String> responseDTO = APIResponse
+//                .<String>builder()
+//                .dateTime(new Date().toString())
+//                .status(HttpStatus.OK.getReasonPhrase())
+//                .code(HttpStatus.OK)
+//                .results("Password reset request has been send to the email")
+//                .build();
+//
+//        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+//    }
+
+    @PostMapping("reset-password")
+    public ResponseEntity<APIResponse<String>> resetPassword(){
 
         APIResponse<String> responseDTO = APIResponse
                 .<String>builder()
@@ -53,6 +67,11 @@ public class UserController {
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+
+
+
+
 
 //    @GetMapping
 //    @PreAuthorize("hasAuthority('users:read')")
