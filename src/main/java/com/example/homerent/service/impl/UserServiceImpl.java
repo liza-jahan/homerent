@@ -8,6 +8,7 @@ import com.example.homerent.exception.IdentifierExistException;
 import com.example.homerent.exception.NotFoundException;
 import com.example.homerent.model.request.UserRegistrationRequest;
 import com.example.homerent.repository.UserRepository;
+import com.example.homerent.service.JwtService;
 import com.example.homerent.service.RoleService;
 import com.example.homerent.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,8 +24,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
-
+    private  final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
     @Override
     public UUID saveUser(UserRegistrationRequest userRegistrationRequest) {
 
@@ -49,11 +52,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UUID createForgetPasswordLink(String email) {
-        if(userRepository.findUserByEmail(email).isEmpty())
+    public UUID sendResetPasswordToken(String email) {
+        Optional<String> user = userRepository.findUserByEmail(email);
+        if(user.isEmpty())
         {
             throw new NotFoundException("Email not found", "01-U01-002");
         }
+        //create password reset token
+        String passwordResetToken = jwtService.createPasswordResetToken(user);
+        {
+
+        }
+
+
+        //send email with password reset token
+        emailService.sendEmail(email,"subject","Your password reset token is "+passwordResetToken);
+
         return null;
     }
 

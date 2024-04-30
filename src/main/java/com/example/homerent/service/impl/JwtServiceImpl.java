@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -79,6 +76,12 @@ public class JwtServiceImpl implements JwtService {
         return Jwts.parserBuilder()
                 .setSigningKey(Keys.hmacShaKeyFor(key))
                 .build().parseClaimsJws(token);
+    }
+
+    @Override
+    public String createPasswordResetToken(Optional<String> user) {
+
+        return null;
     }
 
     private String buildJwt(Map<String, Object> body, Integer expiration, byte[] signingKey){

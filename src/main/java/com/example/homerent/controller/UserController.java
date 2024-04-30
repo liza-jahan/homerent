@@ -2,7 +2,6 @@ package com.example.homerent.controller;
 
 import com.example.homerent.model.APIResponse;
 import com.example.homerent.model.CreationResponse;
-import com.example.homerent.model.ForgotPasswordResponse;
 import com.example.homerent.model.request.ForgotPasswordRequest;
 import com.example.homerent.model.request.UserRegistrationRequest;
 import com.example.homerent.service.UserService;
@@ -42,8 +41,9 @@ public class UserController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
     @PostMapping("forgotPassword")
-    public ResponseEntity<APIResponse<String>> forgotPassword(@RequestBody ForgotPasswordResponse forgotPasswordResponse){
-        String email = forgotPasswordResponse.getEmail();
+    public ResponseEntity<APIResponse<String>> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest){
+        String email = forgotPasswordRequest.getEmail();
+        userService.sendResetPasswordToken(email);
         APIResponse<String> responseDTO = APIResponse
                 .<String>builder()
                 .dateTime(new Date().toString())
