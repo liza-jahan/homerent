@@ -53,22 +53,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UUID sendResetPasswordToken(String email) {
-        Optional<String> user = userRepository.findUserByEmail(email);
+      Optional<String> user = userRepository.findUserByEmail(email);
         if(user.isEmpty())
         {
             throw new NotFoundException("Email not found", "01-U01-002");
         }
         //create password reset token
         String passwordResetToken = jwtService.createPasswordResetToken(user);
-        {
-
-        }
 
 
         //send email with password reset token
-        emailService.sendEmail(email,"subject","Your password reset token is "+passwordResetToken);
+        emailService.sendEmail("eaktekerjahan@gmail.com","subject","Your password reset token is "+passwordResetToken);
 
-        return null;
+        return UUID.randomUUID();
     }
 
 

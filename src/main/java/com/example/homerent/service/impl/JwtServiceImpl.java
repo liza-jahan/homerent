@@ -81,7 +81,11 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String createPasswordResetToken(Optional<String> user) {
 
-        return null;
+        Map<String,Object> body=new HashMap<>();
+        body.put("userName",user.get());
+        byte[] key = authenticationProperties.getSecretKey().getBytes();
+
+        return buildJwt(body, 60 * 15, key);
     }
 
     private String buildJwt(Map<String, Object> body, Integer expiration, byte[] signingKey){
