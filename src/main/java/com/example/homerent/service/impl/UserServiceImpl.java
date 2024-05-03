@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
 
         //send email with password reset token
-        emailService.sendEmail("eaktekerjahan@gmail.com","subject","Your password reset token is "+passwordResetToken);
+        emailService.sendEmail(email,"subject","Your password reset token is "+passwordResetToken);
 
         return UUID.randomUUID();
     }
