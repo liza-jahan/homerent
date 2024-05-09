@@ -3,6 +3,7 @@ package com.example.homerent.controller;
 import com.example.homerent.model.APIResponse;
 import com.example.homerent.model.CreationResponse;
 import com.example.homerent.model.request.ForgotPasswordRequest;
+import com.example.homerent.model.request.ResetPasswordRequest;
 import com.example.homerent.model.request.UserRegistrationRequest;
 import com.example.homerent.service.UserService;
 import jakarta.validation.Valid;
@@ -10,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -53,6 +51,19 @@ public class UserController {
                 .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
 
+    }
+
+    @PatchMapping("resetPassword")
+    public ResponseEntity<APIResponse<String>> resetPassword(@RequestBody ResetPasswordRequest request){
+        String email = userService.resetPassword(request);
+        APIResponse<String> responseDTO = APIResponse
+                .<String>builder()
+                .dateTime(new Date().toString())
+                .status(HttpStatus.OK.getReasonPhrase())
+                .code(HttpStatus.OK)
+                .results(email)
+                .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
 //    @GetMapping

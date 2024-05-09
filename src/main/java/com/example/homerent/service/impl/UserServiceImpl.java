@@ -6,6 +6,7 @@ import com.example.homerent.enums.Month;
 import com.example.homerent.enums.UserType;
 import com.example.homerent.exception.IdentifierExistException;
 import com.example.homerent.exception.NotFoundException;
+import com.example.homerent.model.request.ResetPasswordRequest;
 import com.example.homerent.model.request.UserRegistrationRequest;
 import com.example.homerent.repository.UserRepository;
 import com.example.homerent.service.JwtService;
@@ -63,9 +64,20 @@ public class UserServiceImpl implements UserService {
 
 
         //send email with password reset token
-        emailService.sendEmail(email,"subject","Your password reset token is "+passwordResetToken);
+        emailService.sendEmail(email,"Reset password homerent",
+                "Your password reset token is http://localhost:8080/api/v1/users/resetPassword?token="+passwordResetToken);
 
         return UUID.randomUUID();
+    }
+
+    @Override
+    public String resetPassword(ResetPasswordRequest request) {
+
+        //verify token
+        String email = jwtService.verifyPasswordResetToken(request.getToken());
+
+        //update password
+        return null;
     }
 
 

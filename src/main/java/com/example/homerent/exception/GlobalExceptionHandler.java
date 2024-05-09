@@ -50,5 +50,11 @@ public class GlobalExceptionHandler {
         return serviceResponse;
     }
 
-
+    @ExceptionHandler(TimeExistException.class)
+    public APIResponse<?> handleTimeExistException(TimeExistException exception) {
+        APIResponse<?> serviceResponse = new APIResponse<>();
+        serviceResponse.setStatus(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        serviceResponse.setErrors(Collections.singletonList(new ErrorDTO(null, exception.getMessage(), exception.getErrorCode())));
+        return serviceResponse;
+    }
 }

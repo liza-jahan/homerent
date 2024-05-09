@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResetPasswordRequest {
-   private String password;
    private  String newPassword;
+   private  String token;
 }

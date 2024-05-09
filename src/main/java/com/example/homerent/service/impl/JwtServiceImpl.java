@@ -2,14 +2,14 @@ package com.example.homerent.service.impl;
 
 
 import com.example.homerent.config.AuthenticationProperties;
+import com.example.homerent.exception.TimeExistException;
+import com.example.homerent.exception.TokenExpiredException;
 import com.example.homerent.model.CustomUserDetails;
 import com.example.homerent.repository.TokenRepository;
 import com.example.homerent.service.JwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -87,6 +87,35 @@ public class JwtServiceImpl implements JwtService {
 
         return buildJwt(body, 60 * 15, key);
     }
+
+    @Override
+    public String verifyPasswordResetToken(String token) {
+        long currentTimeInMillis = System.currentTimeMillis();
+
+        Jws <Claims> jwsClaims = null;
+        byte[] key = authenticationProperties.getSecretKey().getBytes();
+        try {
+            jwsClaims = Jwts.parserBuilder()
+                     .setSigningKey(Keys.hmacShaKeyFor(key))
+                     .build().parseClaimsJws(token);
+
+        }
+        catch (ExpiredJwtException expiredJwtException) {
+        log.info("Token has expired: {}", expiredJwtException.getMessage());
+        throw new TokenExpiredException("Token has expired", expiredJwtException);
+       } catch ( UnsupportedJwtException | MalformedJwtException | SignatureException |
+                 IllegalArgumentException e) {
+         log.info("token parssing fail {}",e.getMessage());
+         throw new TimeExistException(e.getMessage(),"1900-39-9");
+        }
+        Claims claims = jwsClaims.getBody();
+        String email= claims.get("userName", String.class);
+
+
+
+        return  email;
+    }
+
 
     private String buildJwt(Map<String, Object> body, Integer expiration, byte[] signingKey){
 
