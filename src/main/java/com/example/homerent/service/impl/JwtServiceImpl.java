@@ -90,7 +90,6 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String verifyPasswordResetToken(String token) {
-        long currentTimeInMillis = System.currentTimeMillis();
 
         Jws <Claims> jwsClaims = null;
         byte[] key = authenticationProperties.getSecretKey().getBytes();
@@ -115,6 +114,8 @@ public class JwtServiceImpl implements JwtService {
 
         return  email;
     }
+
+
 
 
     private String buildJwt(Map<String, Object> body, Integer expiration, byte[] signingKey){

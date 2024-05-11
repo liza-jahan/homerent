@@ -12,7 +12,9 @@ import com.example.homerent.repository.UserRepository;
 import com.example.homerent.service.JwtService;
 import com.example.homerent.service.RoleService;
 import com.example.homerent.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private  final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+
     @Override
     public UUID saveUser(UserRegistrationRequest userRegistrationRequest) {
 
@@ -71,14 +74,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String resetPassword(ResetPasswordRequest request) {
 
         //verify token
         String email = jwtService.verifyPasswordResetToken(request.getToken());
 
         //update password
-        return null;
+        String encodedPassword = passwordEncoder.encode(request.getNewPassword());
+        userRepository.updatePassword(email,encodedPassword);
+        return email;
     }
+
+
 
 
     private boolean isUserExist(UserRegistrationRequest request) {

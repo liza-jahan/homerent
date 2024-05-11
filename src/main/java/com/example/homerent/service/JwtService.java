@@ -18,4 +18,5 @@ public interface JwtService {
     String createPasswordResetToken(Optional<String> user);
 
     String verifyPasswordResetToken(String token);
+
 }

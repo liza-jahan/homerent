@@ -10,5 +10,4 @@ public interface UserService {
     UUID sendResetPasswordToken(String email);
     String resetPassword(ResetPasswordRequest request);
 
-
 }
