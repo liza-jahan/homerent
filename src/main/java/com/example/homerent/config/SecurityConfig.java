@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .addFilterAfter(jwtTokenVerifierFilter, ExceptionHandlerFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users", "users/forgotPassword", "/auth/login",
-                                "/api/v1/auth/refresh", "/swagger-ui/**", "/v3/api-docs/**","users/resetPassword","/homes",
+                                "/api/v1/auth/refresh", "/swagger-ui/**", "/v3/api-docs/**","users/resetPassword","/homes","homes/updateDetails",
                                 "/api-docs/**","/swagger-ui/index.html?**").permitAll()
                         .anyRequest()
                         .authenticated()

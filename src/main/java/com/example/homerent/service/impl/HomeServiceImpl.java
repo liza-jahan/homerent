@@ -7,8 +7,10 @@ import com.example.homerent.model.request.home.HomeInfoUpdateRequest;
 import com.example.homerent.repository.HomeRepository;
 import com.example.homerent.service.HomeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,18 +42,24 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public UUID updateHomeInfo(Long id, HomeInfoUpdateRequest updatedHomeInfo) {
-        HomeDetails homeDetails= homeRepository.findById(id).orElseThrow(() -> new RuntimeException("Home Information not found"));
 
+    public Optional<HomeDetails> updateHomeDetails(UUID id, HomeInfoUpdateRequest homeInfoUpdateRequest) {
+        return homeRepository.findById(id).map(existingHomeDetails -> {
+            HomeDetails homeDetails = HomeDetails.builder()
+                    .location(homeInfoUpdateRequest.getLocation())
+                    .houseNumber(homeInfoUpdateRequest.getHouseNumber() != 0 ? homeInfoUpdateRequest.getHouseNumber() : existingHomeDetails.getHouseNumber())
+                    .phoneNumber(homeInfoUpdateRequest.getPhoneNumber())
+                    .accountNonExpired(existingHomeDetails.isAccountNonExpired())
+                    .accountNonLocked(existingHomeDetails.isAccountNonLocked())
+                    .credentialsNonExpired(existingHomeDetails.isCredentialsNonExpired())
+                    .enabled(existingHomeDetails.isEnabled())
+                    .verified(existingHomeDetails.isVerified())
+                    .build();
 
-        homeDetails.setLocation(updatedHomeInfo.getLocation());
-        homeDetails.setHouseNumber(updatedHomeInfo.getHouseNumber());
-        homeDetails.setPhoneNumber(updatedHomeInfo.getPhoneNumber());
+            homeDetails.setId(existingHomeDetails.getId()); // Ensure the ID remains the same
 
-        homeRepository.save(homeDetails);
-        return homeDetails.getId();
-
-
-    }
+            return homeRepository.save(homeDetails);
+        });
+        }
 }
 //builder pattern ,Object mapper

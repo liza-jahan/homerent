@@ -6,13 +6,14 @@ import lombok.*;
 
 import java.util.UUID;
 
+
 @Table(name = "home_details")
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Builder(access = AccessLevel.PUBLIC)
 public class HomeDetails extends BaseEntity {
 
         @NotNull(message = "Username is required")
