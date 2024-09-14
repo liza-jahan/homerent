@@ -10,9 +10,6 @@ import com.example.homerent.service.HomeService;
 import com.example.homerent.service.UserService;
 import com.example.homerent.utils.CurrentLogInUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
