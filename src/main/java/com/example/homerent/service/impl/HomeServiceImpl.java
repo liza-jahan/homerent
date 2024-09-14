@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -62,6 +63,12 @@ public class HomeServiceImpl implements HomeService {
 
         //ORM
         return Optional.of(existingHomeDetails);
+    }
+
+    @Override
+    public List<HomeDetails> getAllDetails() {
+
+        return null;
     }
 //    private void saveHomeDetails(UserEntity user,String userName,  HomeInfoUpdateRequest homeInfoUpdateRequest) {
 //
