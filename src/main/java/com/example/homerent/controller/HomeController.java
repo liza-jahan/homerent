@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +48,26 @@ private final HomeService homeService;
                 .status(HttpStatus.OK.getReasonPhrase())
                 .code(HttpStatus.OK)
                 .results(new CreationResponse(updateHomeDetails.get().getId()))
+                .build();
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+    @GetMapping("/allHomeDetails")
+    public ResponseEntity<List<HomeDetails>> getAllHomeInfo() {
+       List<HomeDetails> homeDetails= homeService.getAllDetails();
+        return new ResponseEntity<>(homeDetails, HttpStatus.OK);
+    }
+
+    @DeleteMapping ("/deletePost/{id}")
+    public ResponseEntity<APIResponse<CreationResponse>> deleteHomeInfo(  @PathVariable UUID id){
+     homeService.deleteHomeInfo(id);
+     CreationResponse creationResponse=new CreationResponse(id);
+        APIResponse<CreationResponse> responseDTO = APIResponse
+                .<CreationResponse>builder()
+                .dateTime(new Date().toString())
+                .status(HttpStatus.OK.getReasonPhrase())
+                .code(HttpStatus.OK)
+                .results(creationResponse)
                 .build();
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);

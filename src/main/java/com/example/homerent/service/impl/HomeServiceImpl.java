@@ -64,8 +64,13 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public List<HomeDetails> getAllDetails() {
+        return homeRepository.findAll();
+    }
 
-        return null;
+    @Override
+    public void deleteHomeInfo(UUID id) {
+        HomeDetails homeDetails=homeRepository.findById(id).orElseThrow(() -> new RuntimeException("Home Details id is not found"));
+        homeRepository.delete(homeDetails);
     }
 //    private void saveHomeDetails(UserEntity user,String userName,  HomeInfoUpdateRequest homeInfoUpdateRequest) {
 //

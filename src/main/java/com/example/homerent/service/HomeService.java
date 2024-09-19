@@ -13,4 +13,5 @@ public interface HomeService {
     UUID saveHome(RegistrationRequest request);
     Optional<HomeDetails> updateHomeDetails(UUID id, HomeInfoUpdateRequest updatedUser);
     List<HomeDetails> getAllDetails ();
+    void deleteHomeInfo(UUID id);
 }
