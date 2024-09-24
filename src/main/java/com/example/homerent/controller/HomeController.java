@@ -39,7 +39,7 @@ private final HomeService homeService;
     }
 
 
-    @PutMapping ("{id}")
+    @PutMapping ("/updateHomeInfo/{id}")
     public ResponseEntity<APIResponse<CreationResponse>> updateHomeInfo( @RequestBody @Valid HomeInfoUpdateRequest homeInfoUpdateRequest, @PathVariable UUID id){
         Optional<HomeDetails> updateHomeDetails=homeService.updateHomeDetails(id,homeInfoUpdateRequest);
         APIResponse<CreationResponse> responseDTO = APIResponse
@@ -58,7 +58,7 @@ private final HomeService homeService;
         return new ResponseEntity<>(homeDetails, HttpStatus.OK);
     }
 
-    @DeleteMapping ("/deletePost/{id}")
+    @DeleteMapping ("/deleteHomeDetails/{id}")
     public ResponseEntity<APIResponse<CreationResponse>> deleteHomeInfo(  @PathVariable UUID id){
      homeService.deleteHomeInfo(id);
      CreationResponse creationResponse=new CreationResponse(id);

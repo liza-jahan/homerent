@@ -12,9 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -59,6 +57,7 @@ public class UserEntity extends UserBaseEntity{
     })
     private Set<Role> roles;
 
-
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HouseFavouriteList> favorites = new ArrayList<>();
 
 }

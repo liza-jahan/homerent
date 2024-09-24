@@ -72,15 +72,6 @@ public class HomeServiceImpl implements HomeService {
         HomeDetails homeDetails=homeRepository.findById(id).orElseThrow(() -> new RuntimeException("Home Details id is not found"));
         homeRepository.delete(homeDetails);
     }
-//    private void saveHomeDetails(UserEntity user,String userName,  HomeInfoUpdateRequest homeInfoUpdateRequest) {
-//
-//        HomeDetails homeDetails = HomeDetails.builder()
-//                .houseNumber(homeInfoUpdateRequest.getHouseNumber())
-//                .location(homeInfoUpdateRequest.getLocation())
-//                .phoneNumber(homeInfoUpdateRequest.getPhoneNumber())
-//                .build();
-//
-//        homeRepository.save(homeDetails);
-//    }
+
 }
 //builder pattern ,Object mapper
